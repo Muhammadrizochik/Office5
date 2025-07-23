@@ -63,3 +63,23 @@ from django.shortcuts import render
 
 def home_view(request):
     return render(request, 'home.html')
+
+
+from django.shortcuts import render
+from .models import Task
+
+def tasks_list(request):
+    name_filter = request.GET.get('name')
+    doer_filter = request.GET.get('doer')
+    status_filter = request.GET.get('status')
+
+    tasks = Task.objects.all()
+
+    if name_filter:
+        tasks = tasks.filter(name__icontains=name_filter)
+    if doer_filter:
+        tasks = tasks.filter(doer__icontains=doer_filter)
+    if status_filter:
+        tasks = tasks.filter(status__iexact=status_filter)
+
+    return render(request, 'task_list.html', {'tasks': tasks})
