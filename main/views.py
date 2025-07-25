@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Task
-from .forms import TaskForm
+from forms.tasks import TaskForm
 
 def is_superuser(user):
     return user.is_superuser
