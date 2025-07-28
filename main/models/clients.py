@@ -8,4 +8,7 @@ class Client(models.Model):
     address = models.CharField(max_length=255)
     added_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(to=User, on_delete=models.CASCADE(), related_name='clients')
+    created_by = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='clients')
+
+    def __str__(self):
+        return self.f_name
