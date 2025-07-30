@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from models.clients import Client
+from main.models.clients import Client
 
 @login_required
 def client_list(request):
