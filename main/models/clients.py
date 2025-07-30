@@ -11,3 +11,6 @@ class Client(BaseModel):
 
     def __str__(self):
         return self.f_name
+
+    class Meta:
+        ordering = ['-added_at']
