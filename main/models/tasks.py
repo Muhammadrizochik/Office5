@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from models.base import BaseModel
+from main.models.base import BaseModel
 
 class Task(BaseModel):
     STATUS_CHOICES = [
@@ -24,5 +24,3 @@ class Tasks(BaseModel):
 
     def __str__(self):
         return self.name
-
-
