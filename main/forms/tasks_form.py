@@ -9,9 +9,4 @@ class TaskForm(forms.ModelForm):
 class TaskAdminForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields =
-
-        from django.contrib import admin
-        from .models import Contact
-
-        admin.site.register(Contact)
+        fields =['name']
