@@ -4,11 +4,6 @@ from main.models.tasks import Tasks
 from main.forms.tasks_form import TaskForm
 from django.shortcuts import render
 
-
-def home_view(request):
-    return render(request, 'home.html')
-
-
 def is_superuser(user):
     return user.is_superuser
 
