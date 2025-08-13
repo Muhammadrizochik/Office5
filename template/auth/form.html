@@ -12,7 +12,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #1E1E1E;
+        background-color: #F3F4F6;
     }
 
     .login-form {
@@ -56,8 +56,7 @@
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-            <small>Don't have a Account ? <a href="/create">register now</a> </small>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/home" class="btn btn-primary">Submit</a>
             {% endbuttons %}
         </form>
     </div>
