@@ -5,13 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb5b2963-e805-498d-8c08-64d26da9dccb" name="Changes" comment="">
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/urls/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/views/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/auth/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/auth/form.html" afterDir="false" />
-=======
       <change afterPath="$PROJECT_DIR$/main/urls/__init__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/main/urls/home.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/main/views/home.py" afterDir="false" />
@@ -20,7 +13,6 @@
       <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views/clients.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views/clients.py" afterDir="false" />
->>>>>>> 9506b04264509a2dba462c66d3108557beaf5c7e
       <change beforePath="$PROJECT_DIR$/template/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
