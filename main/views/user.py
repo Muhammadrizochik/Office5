@@ -13,5 +13,9 @@ class UserLoginView(LoginView):
     form_class = AuthenticationForm
 
 
+<<<<<<< HEAD
 class UserLogoutView(LogoutView):
     next_page = "/"
+=======
+
+>>>>>>> 9506b04264509a2dba462c66d3108557beaf5c7e

@@ -1,16 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
+from main.models import clients, tasks
 
-class UserAdmin(admin.ModelAdmin):
-    def has_module_permission(self, request):
-        return request.user.is_superuser
+@admin.register(clients.Client)
+class ClientsAdmin(admin.ModelAdmin):
+    ...
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-
-class GroupAdmin(admin.ModelAdmin):
-    def has_module_permission(self, request):
-        return request.user.is_superuser
-
-admin.site.unregister(Group)
-admin.site.register(Group, GroupAdmin)
+@admin.register(tasks.Task)
+class TaskAdmin(admin.ModelAdmin):
+    ...
