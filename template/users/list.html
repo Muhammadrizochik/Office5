@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foydalanuvchilar ro'yxati</title>
+</head>
+<body>
+    <h1>Foydalanuvchilar ro'yxati</h1>
+    <a href="{% url 'add_user' %}">Yangi foydalanuvchi qo‘shish</a>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }}
+                {% if not user.is_superuser %}
+                    <a href="{% url 'delete_user' user.id %}">O‘chirish</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

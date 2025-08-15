@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yangi foydalanuvchi qo‘shish</title>
+</head>
+<body>
+    <h1>Yangi foydalanuvchi qo‘shish</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Saqlash</button>
+    </form>
+    <a href="{% url 'user_list' %}">Orqaga</a>
+</body>
+</html>
