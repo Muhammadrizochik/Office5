@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .client-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .client-list th, .client-list td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .client-list th {
+            background-color: #f2f2f2;
+        }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+        }
+        .add-client {
+            display: inline-block;
+            margin-bottom: 15px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clientlar</h1>
+
+    <a href="{% url 'client_create' %}" class="add-client">[+] Qo'shish</a>
+
+    <table class="client-list">
+        <thead>
+            <tr>
+                <th>Ism</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td class="actions">
+                    <a href="{% url 'client_update' client.id %}">[✏]</a>
+                    <a href="{% url 'client_delete' client.id %}">[🗑]</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">Hech qanday client mavjud emas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
