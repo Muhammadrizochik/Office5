@@ -16,7 +16,7 @@ def client_create(request):
         name = request.POST.get('name')
         Client.objects.create(name=name, created_by=request.user)
         return redirect('client_list')
-    return render(request, 'client_create.html')
+    return render(request, 'clients.html')
 
 @login_required
 def client_update(request, client_id):
@@ -29,7 +29,7 @@ def client_update(request, client_id):
         client.save()
         return redirect('client_list')
     
-    return render(request, 'client_update.html', {'client': client})
+    return render(request, 'client.html', {'client': client})
 
 @user_passes_test(lambda u: u.is_superuser)
 @login_required
@@ -37,3 +37,4 @@ def client_delete(request, client_id):
     client = get_object_or_404(Client, id=client_id)
     client.delete()
     return redirect('client_list')
+    
