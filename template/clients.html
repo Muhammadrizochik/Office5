@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Client List</title>
+{% extends "base.html" %}
+
+{% block content %}
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,9 +30,7 @@
             font-size: 20px;
         }
     </style>
-</head>
-<body>
-    <h1>Clientlar</h1>
+   <h1>Clientlar</h1>
 
     <a href="{% url 'client_create' %}" class="add-client">[+] Qo'shish</a>
 
@@ -60,5 +57,5 @@
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+
+{% endblock %}

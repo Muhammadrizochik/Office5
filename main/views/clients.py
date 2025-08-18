@@ -8,7 +8,7 @@ def client_list(request):
         clients = Client.objects.all()
     else:
         clients = Client.objects.filter(created_by=request.user)
-    return render(request, 'client_list.html', {'clients': clients})
+    return render(request, 'clients.html', {'clients': clients})
 
 @login_required
 def client_create(request):
