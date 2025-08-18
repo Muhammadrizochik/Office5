@@ -9,12 +9,13 @@ from main.models.clients import User
 class UserCreateView(CreateView):
     template_name = "auth/form.html"
     form_class = UserCreationForm
-    success_url = "/auth/login"
+    success_url = "/home"
 
 
 class UserLoginView(LoginView):
     template_name = "auth/form.html"
     form_class = AuthenticationForm
+    success_url = "/home"
 
 
 class UserLogoutView(LogoutView):
@@ -27,4 +28,4 @@ def user_list(request):
         users = User.objects.all()
     else:
         users = User.objects.filter(created_by=request.user)
-    return render(request, 'users.html', {'users': users})
+    return render(request, 'users/list.html', {'users': users})
