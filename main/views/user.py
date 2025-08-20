@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.template.context_processors import request
 from django.views.generic.edit import CreateView
 from main.models.clients import User
+from main.forms.users_form import UserUpdateForm
 
 
 class UserCreateView(CreateView):
@@ -28,4 +30,18 @@ def user_list(request):
         users = User.objects.all()
     else:
         users = User.objects.filter(created_by=request.user)
-    return render(request, 'users/list.html', {'users': users})
+    return render(request, 'auth/list.html', {'users': users})
+
+
+@login_required
+def update_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('/auth/')
+    else:
+        form = UserUpdateForm(instance=user)
+
+    return render(request, 'auth/form.html', {'form': form})
