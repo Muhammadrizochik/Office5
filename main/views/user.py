@@ -30,7 +30,7 @@ def user_list(request):
         users = User.objects.all()
     else:
         users = User.objects.filter(created_by=request.user)
-    return render(request, 'auth/list.html', {'users': users})
+    return render(request, 'users/list.html', {'users': users})
 
 
 @login_required

@@ -16,7 +16,7 @@ def client_create(request):
         name = request.POST.get('name')
         Client.objects.create(name=name, created_by=request.user)
         return redirect('client_list')
-    return render(request, 'clients.html')
+    return render(request, 'create.html')
 
 @login_required
 def client_update(request, client_id):
@@ -25,7 +25,10 @@ def client_update(request, client_id):
         return redirect('client_list')
     
     if request.method == "POST":
-        client.name = request.POST.get('name')
+        client.f_name = request.POST.get('name')
+        client.phone = request.POST.get('phone')
+        client.email = request.POST.get('email')
+        client.address = request.POST.get('address')
         client.save()
         return redirect('client_list')
     
