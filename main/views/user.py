@@ -40,7 +40,7 @@ def update_user(request, pk):
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('/auth/')
+            return redirect('/users')
     else:
         form = UserUpdateForm(instance=user)
 

@@ -1,43 +1,53 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Q
 from main.models.clients import Client
+from main.forms.clients_form import ClientForm
 
-@login_required
 def client_list(request):
-    if request.user.is_superuser:
-        clients = Client.objects.all()
-    else:
-        clients = Client.objects.filter(created_by=request.user)
-    return render(request, 'clients.html', {'clients': clients})
+    search = request.GET.get("search")
+    created_by = request.GET.get("created_by")
 
-@login_required
+    clients = Client.objects.all()
+
+    if search:
+        clients = clients.filter(
+            Q(f_name__icontains=search) | Q(phone__icontains=search)
+        )
+    if created_by:
+        clients = clients.filter(created_by=created_by)
+
+    context = {
+        "clients": clients,
+    }
+    return render(request, "clients.html", context)
+
+
 def client_create(request):
     if request.method == "POST":
-        name = request.POST.get('name')
-        Client.objects.create(name=name, created_by=request.user)
-        return redirect('client_list')
-    return render(request, 'create.html')
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("client_list")
+    else:
+        form = ClientForm()
+    return render(request, "create.html", {"form": form, "title": "Client qo‘shish"})
 
-@login_required
-def client_update(request, client_id):
-    client = get_object_or_404(Client, id=client_id)
-    if client.created_by != request.user:
-        return redirect('client_list')
-    
+
+def client_update(request, pk):
+    client = get_object_or_404(Client, pk=pk)
     if request.method == "POST":
-        client.f_name = request.POST.get('name')
-        client.phone = request.POST.get('phone')
-        client.email = request.POST.get('email')
-        client.address = request.POST.get('address')
-        client.save()
-        return redirect('client_list')
-    
-    return render(request, 'client.html', {'client': client})
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            form.save()
+            return redirect("client_list")
+    else:
+        form = ClientForm(instance=client)
+    return render(request, "form.html", {"form": form, "title": "Clientni o‘zgartirish"})
 
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def client_delete(request, client_id):
-    client = get_object_or_404(Client, id=client_id)
-    client.delete()
-    return redirect('client_list')
-    
+
+def client_delete(request, pk):
+    client = get_object_or_404(Client, client.id)
+    if request.method == "POST":
+        client.delete()
+        return redirect("client_list")
+    return render(request, "form.html", {"client": client})
