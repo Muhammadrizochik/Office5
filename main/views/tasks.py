@@ -13,7 +13,7 @@ def task_list(request):
         tasks = Task.objects.all()
     else:
         tasks = Task.objects.filter(created_by=request.user)
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+    return render(request, 'task/task_list.html', {'tasks': tasks})
 
 
 @login_required
@@ -27,7 +27,7 @@ def task_create(request):
             return redirect('task_list')
     else:
         form = TaskForm()
-    return render(request, 'tasks/task_form.html', {'form': form})
+    return render(request, 'task/task_form.html', {'form': form})
 
 
 
@@ -39,19 +39,17 @@ def task_update(request, pk):
         return redirect('task_list')
 
     if request.method == 'POST':
-        if request.user.is_superuser:
-            form = TaskForm(request.POST, instance=task)
-        else:
-            form = TaskForm(request.POST, instance=task, fields=['status'])  # faqat status
+        form = TaskForm(request.POST, instance=task)
+        if not request.user.is_superuser:
+            form.fields = {'status': form.fields['status']}
         if form.is_valid():
             form.save()
             return redirect('task_list')
     else:
-        if request.user.is_superuser:
-            form = TaskForm(instance=task)
-        else:
-            form = TaskForm(instance=task, fields=['status'])
-    return render(request, 'tasks/task_form.html', {'form': form})
+        form = TaskForm(instance=task)
+        if not request.user.is_superuser:
+            form.fields = {'status': form.fields['status']}
+    return render(request, 'tasks/task_list.html', {'form': form})
 
 
 @login_required
@@ -70,7 +68,7 @@ def home_view(request):
 from django.shortcuts import render
 from main.models.tasks import Task
 
-def tasks_list(request):
+def task_filtered_list(request):
     name_filter = request.GET.get('name')
     doer_filter = request.GET.get('doer')
     status_filter = request.GET.get('status')
