@@ -8,7 +8,4 @@ class ClientsAdmin(admin.ModelAdmin):
 
 @admin.register(tasks.Tasks)
 class TasksAdmin(admin.ModelAdmin):
-    list_display = ('name', 'status', 'doer', 'client', 'added_at')
-    list_filter = ('status', 'doer', 'client', 'added_at')
-    search_fields = ('name', 'doer')
-    ordering = ('-added_at',)
+    ...
