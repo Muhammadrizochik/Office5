@@ -6,9 +6,6 @@ from main.models import clients, tasks
 class ClientsAdmin(admin.ModelAdmin):
     ...
 
-@admin.register(tasks)
+@admin.register(tasks.Tasks)
 class TasksAdmin(admin.ModelAdmin):
-    list_display = ('name', 'status', 'doer', 'client', 'added_at')
-    list_filter = ('status', 'doer', 'client', 'added_at')
-    search_fields = ('name', 'doer')
-    ordering = ('-added_at',)
+    ...

@@ -9,6 +9,9 @@ class ClientForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data.get("phone")
-        if Client.objects.filter(phone=phone).exists():
-            raise ValidationError("Bu telefon raqami allaqachon ro'yhatdan o'tgan")
+        qs = Client.objects.filter(phone=phone)
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise ValidationError("Bu telefon raqami allaqachon ro'yxatdan o'tgan")
         return phone

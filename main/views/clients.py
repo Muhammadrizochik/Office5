@@ -4,6 +4,7 @@ from main.models.clients import Client
 from main.forms.clients_form import ClientForm
 from django.contrib.auth.models import User
 
+@login_required("")
 def client_list(request):
     search = request.GET.get("search", "")
     created_by = request.GET.get("created_by", "")
@@ -37,7 +38,7 @@ def client_create(request):
 def client_update(request, client_id):
     client = get_object_or_404(Client, pk=client_id)
     if request.method == "POST":
-        form = ClientForm(request.POST, instance=client)
+        form = ClientForm(data=request.POST, instance=client)
         if form.is_valid():
             form.save()
             return redirect("client_list")
@@ -49,6 +50,6 @@ def client_update(request, client_id):
 
 @login_required
 def client_delete(request, pk):
-    client = get_object_or_404(Client, pk=pk)
+    client = Client.objects.filter(pk=pk)
     client.delete()
     return redirect('client_list')
