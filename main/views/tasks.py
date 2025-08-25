@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from main.models.tasks import Task
+from main.models.tasks import Tasks as Task
 from main.forms.tasks_form import TaskForm
 
 def is_superuser(user):
@@ -13,7 +13,7 @@ def task_list(request):
         tasks = Task.objects.all()
     else:
         tasks = Task.objects.filter(created_by=request.user)
-    return render(request, 'task/task_list.html', {'tasks': tasks})
+    return render(request, 'task_list.html', context={'tasks': tasks})
 
 
 @login_required
@@ -24,10 +24,10 @@ def task_create(request):
             task = form.save(commit=False)
             task.created_by = request.user
             task.save()
-            return redirect('task_list')
+            return redirect('/tasks')
     else:
         form = TaskForm()
-    return render(request, 'task/task_form.html', {'form': form})
+    return render(request, 'form.html', {'form': form, "title": "Task Create"})
 
 
 
@@ -36,7 +36,7 @@ def task_create(request):
 def task_update(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.user != task.created_by and not request.user.is_superuser:
-        return redirect('task_list')
+        return redirect('/tasks')
 
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
@@ -44,12 +44,12 @@ def task_update(request, pk):
             form.fields = {'status': form.fields['status']}
         if form.is_valid():
             form.save()
-            return redirect('task_list')
+            return redirect('/tasks')
     else:
         form = TaskForm(instance=task)
         if not request.user.is_superuser:
             form.fields = {'status': form.fields['status']}
-    return render(request, 'tasks/task_list.html', {'form': form})
+    return render(request, 'form.html', {'form': form, "title": "Task Update"})
 
 
 @login_required
@@ -57,7 +57,7 @@ def task_update(request, pk):
 def task_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
     task.delete()
-    return redirect('task_list')
+    return redirect('/tasks')
 
 from django.shortcuts import render
 
@@ -66,7 +66,7 @@ def home_view(request):
 
 
 from django.shortcuts import render
-from main.models.tasks import Task
+from main.models.tasks import Tasks as Task
 
 def task_filtered_list(request):
     name_filter = request.GET.get('name')
