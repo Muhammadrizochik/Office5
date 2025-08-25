@@ -45,8 +45,18 @@ def update_user(request, pk):
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('/users')
+            return redirect('/auth/')
     else:
         form = UserUpdateForm(instance=user)
 
     return render(request, 'auth/form.html', {'form': form})
+
+
+@login_required
+def delete_user(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        return redirect('home')
+    return render(request, 'delete_user_confirm.html')
+

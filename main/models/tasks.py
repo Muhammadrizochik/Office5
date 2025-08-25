@@ -12,8 +12,8 @@ class Tasks(models.Model):
     ]
     status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='new')
 
-    doer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
+    doer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks_doer')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks_creater')
 
     client = models.ForeignKey('Client', on_delete=models.SET_NULL, null=True, related_name='tasks')
 
