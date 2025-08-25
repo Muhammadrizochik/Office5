@@ -19,6 +19,11 @@ class UserLoginView(LoginView):
     form_class = AuthenticationForm
     success_url = "/home"
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
+
 
 class UserLogoutView(LogoutView):
     next_page = "/"
@@ -40,7 +45,7 @@ def update_user(request, pk):
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('/user/')
+            return redirect('/auth/')
     else:
         form = UserUpdateForm(instance=user)
 
