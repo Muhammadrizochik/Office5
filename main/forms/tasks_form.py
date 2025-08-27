@@ -1,13 +1,18 @@
 from django import forms
 from main.models.tasks import Tasks as Task
  
-class TaskForm(forms.ModelForm):
+class TaskUpdateForm(forms.ModelForm):
     class Meta:
         model = Task
-        exclude = ("status", "created_by")
+        fields = ("status", )
+
+class TaskUpdateManagerForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        exclude = ("created_by", )
 
 
 class TaskAdminForm(forms.ModelForm):
     class Meta:
         model = Task
-        exclude = ("status", "created_by")
+        exclude = ("created_by", "status")
