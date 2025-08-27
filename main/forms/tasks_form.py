@@ -1,12 +1,13 @@
 from django import forms
-from main.models.tasks import Task
-
+from main.models.tasks import Tasks as Task
+ 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['status']
+        exclude = ("status", "created_by")
+
 
 class TaskAdminForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["title"]
+        exclude = ("status", "created_by")
