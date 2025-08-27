@@ -6,6 +6,7 @@ from django.template.context_processors import request
 from django.views.generic.edit import CreateView
 from main.models.clients import User
 from main.forms.users_form import UserUpdateForm
+from django.db.models import Count
 
 
 class UserCreateView(CreateView):
@@ -31,10 +32,7 @@ class UserLogoutView(LogoutView):
 
 @login_required
 def user_list(request):
-    if request.user.is_superuser:
-        users = User.objects.all()
-    else:
-        users = User.objects.filter(created_by=request.user)
+    users = User.objects.annotate(task_count=Count('tasks_doer'))
     return render(request, 'users/list.html', {'users': users})
 
 
