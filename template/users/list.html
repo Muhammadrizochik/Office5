@@ -40,8 +40,12 @@
     <table class="client-list">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Username</th>
                 <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Task count</th>
                 <th>Active</th>
                 <th>Amallar</th>
             </tr>
@@ -49,8 +53,12 @@
         <tbody>
             {% for user in users %}
             <tr>
-<td>{{ user.username }}</td>
-<td>{{ user.first_name }}</td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.tasks_creater.all.count }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.first_name }}</td>
 <td>
     {% if user.is_active %}
         <span style="color: green;"> ✅ </span>
