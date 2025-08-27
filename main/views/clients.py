@@ -28,11 +28,13 @@ def client_create(request):
     if request.method == "POST":
         form = ClientForm(request.POST)
         if form.is_valid():
+            client = form.save(commit=False)
+            client.created_by = request.user
             form.save()
             return redirect("client_list")
     else:
         form = ClientForm()
-    return render(request, "create.html", {"form": form, "title": "Client qo‘shish"})
+    return render(request, "create.html", {"form": form,  "title": "Client qo‘shish"})
 
 
 def client_update(request, client_id):

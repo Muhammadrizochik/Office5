@@ -31,36 +31,73 @@
         }
     </style>
    <h1>Clientlar</h1>
+<form method="get" class="filter-bar" role="search" aria-label="Client filter">
+  <div class="input-wrap">
+    <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
+      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 
+      6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79
+      L20 21.5 21.5 20l-6-6zM4 9.5C4 6.46 6.46 4 9.5 4S15 6.46 
+      15 9.5 12.54 15 9.5 15 4 12.54 4 9.5z"></path>
+    </svg>
+    <input
+      type="text"
+      name="search"
+      placeholder="Foydalanuvchi nomi yoki telefon…"
+      value="{{ request.GET.search|default:'' }}"
+    />
+  </div>
 
-<form method="get" class="row g-2 mb-3 align-items-center">
-    <!-- Qidiruv inputi -->
-    <div class="col-md-6">
-        <input 
-            type="text" 
-            name="search" 
-            placeholder="Foydalanuvchi nomi yoki telefon" 
-            value="{{ request.GET.search }}"
-            class="form-control"
-        >
-    </div>
+  <div class="select-wrap">
+    <select name="created_by" id="created_by" onchange="this.form.submit()">
+      <option value="">Hammasi</option>
+      {% for user in users %}
+        <option value="{{ user.id }}"
+          {% if request.GET.created_by|default:'' == user.id|stringformat:'s' %}selected{% endif %}>
+          {{ user.get_full_name|default:user.username }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
 
-    <!-- Yaratgan foydalanuvchi bo‘yicha filter -->
-    <div class="col-md-4">
-        <select name="created_by" class="form-select">
-            <option value="">Hammasi</option>
-            {% for user in users %}
-                <option value="{{ user.id }}" {% if request.GET.created_by == user.id|stringformat:"s" %}selected{% endif %}>
-                    {{ user.username }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <!-- Filtrlash tugmasi -->
-    <div class="col-md-2">
-        <button type="submit" class="btn btn-dark w-100">Filtrlash</button>
-    </div>
+  <div class="btns">
+    <button type="submit" class="btn primary">Qidirish</button>
+    {% if request.GET.search or request.GET.created_by %}
+      <a href="{% url 'client_list' %}" class="btn ghost">Tozalash</a>
+    {% endif %}
+  </div>
 </form>
+
+<style>
+  .filter-bar{
+    display:flex; flex-wrap:wrap; gap:.5rem; align-items:center;
+    padding:.5rem;
+  }
+  .input-wrap{
+    flex:1 1 220px; display:flex; align-items:center; gap:.4rem;
+    border:1px solid #ddd; border-radius:6px; padding:.4rem .6rem;
+  }
+  .icon{ width:16px; height:16px; fill:#888; }
+  .input-wrap input{
+    border:none; outline:none; width:100%; font-size:14px; background:transparent;
+  }
+  .select-wrap{
+    flex:0 1 180px; border:1px solid #ddd; border-radius:6px; padding:.3rem .5rem;
+  }
+  .select-wrap select{
+    border:none; outline:none; width:100%; font-size:14px; background:transparent;
+  }
+  .btns{ display:flex; gap:.4rem; margin-left:auto; }
+  .btn{
+    border:1px solid #ddd; border-radius:6px; padding:.4rem .7rem;
+    font-size:14px; cursor:pointer; background:#fff;
+  }
+  .btn.primary{ background:#111827; color:#fff; border-color:#111827; }
+  .btn.ghost{ background:#fff; }
+  @media (max-width:640px){
+    .btns{ width:100%; }
+    .btns .btn{ flex:1; }
+  }
+</style>
 
     <a href="{% url 'client_create' %}" class="add-client"> Qo'shish</a>
 
@@ -92,7 +129,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="2">Hech qanday client mavjud emas.</td>
+                <td colspan="5">Hech qanday client mavjud emas.</td>
             </tr>
             {% endfor %}
         </tbody>
