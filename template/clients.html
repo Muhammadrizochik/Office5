@@ -104,6 +104,7 @@
     <table class="client-list">
         <thead>
             <tr>
+              <th>ID</th>
                 <th>Ism</th>
                 <th>Nomer</th>
                 <th>Email</th>
@@ -114,6 +115,7 @@
         <tbody>
             {% for client in clients %}
             <tr>
+                <td>{{client.id}}</td>
                 <td>{{ client.f_name }}</td>
                 <td>{{client.phone}}</td>
                 <td> {{client.email}}</td>
