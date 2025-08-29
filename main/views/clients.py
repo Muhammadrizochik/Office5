@@ -4,17 +4,23 @@ from main.models.clients import Client
 from main.forms.clients_form import ClientForm
 from django.contrib.auth.models import User
 
-@login_required("")
-def client_list(request):
+
+
+
+@login_required
+def client_list_restricted(request):
     search = request.GET.get("search", "")
     created_by = request.GET.get("created_by", "")
 
-    clients = Client.objects.all()
+    if request.user.is_superuser:
+        clients = Client.objects.all()
+    else:
+        clients = Client.objects.filter(created_by=request.user)
 
     if search:
         clients = clients.filter(f_name__icontains=search) | clients.filter(phone__icontains=search)
 
-    if created_by:
+    if created_by and request.user.is_superuser:
         clients = clients.filter(created_by=created_by)
 
     users = User.objects.all()
@@ -28,11 +34,13 @@ def client_create(request):
     if request.method == "POST":
         form = ClientForm(request.POST)
         if form.is_valid():
+            client = form.save(commit=False)
+            client.created_by = request.user
             form.save()
             return redirect("client_list")
     else:
         form = ClientForm()
-    return render(request, "create.html", {"form": form, "title": "Client qo‘shish"})
+    return render(request, "create.html", {"form": form,  "title": "Client qo‘shish"})
 
 
 def client_update(request, client_id):

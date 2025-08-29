@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['f_name', 'email', 'phone', 'address', 'created_by']
+        fields = ['f_name', 'email', 'phone', 'address']
 
     def clean_phone(self):
         phone = self.cleaned_data.get("phone")
