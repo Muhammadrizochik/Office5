@@ -10,7 +10,7 @@ class Tasks(models.Model):
         ('jarayyonda','Jarayyonda'),
         ('tugallangan','Tugallangan'),
     ]
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='new')
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='yangi')
 
     doer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks_doer')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks_create')

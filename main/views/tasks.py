@@ -1,19 +1,31 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from main.models.tasks import Tasks as Task
+from main.models.tasks import Tasks as Task, User
 from main.forms.tasks_form import TaskAdminForm, TaskUpdateForm, TaskUpdateManagerForm
 
 def is_superuser(user):
     return user.is_superuser
 
 
-@login_required
+@login_required("")
 def task_list(request):
-    if request.user.is_superuser:
-        tasks = Task.objects.all()
-    else:
-        tasks = Task.objects.filter(created_by=request.user)
-    return render(request, 'task_list.html', context={'tasks': tasks})
+    search = request.GET.get("search", "")
+    created_by = request.GET.get("created_by", "")
+
+    task = Task.objects.all()
+
+    if search:
+        task = task.filter(title__icontains=search)
+
+    if created_by:
+        task = task.filter(created_by=created_by)
+
+    users = User.objects.all()
+
+    return render(request, "task_list.html", {
+        "task":task,
+        "users": users
+    })
 
 
 @login_required
