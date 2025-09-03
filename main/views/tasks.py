@@ -12,18 +12,26 @@ def task_list(request):
     search = request.GET.get("search", "")
     created_by = request.GET.get("created_by", "")
 
-    task = Task.objects.all()
+    if request.user.is_superuser:
+        task = Task.objects.all()
+    else:
+        task = Task.objects.filter(created_by=request.user)
+
+    print(task)
 
     if search:
-        task = task.filter(title__icontains=search)
+        task = task.filter(name__icontains=search)
 
     if created_by:
         task = task.filter(created_by=created_by)
 
+    if status:
+        status = status.filter(status=status)
+
     users = User.objects.all()
 
     return render(request, "task_list.html", {
-        "task":task,
+        "tasks":task,
         "users": users
     })
 
