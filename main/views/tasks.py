@@ -25,9 +25,6 @@ def task_list(request):
     if created_by:
         task = task.filter(created_by=created_by)
 
-    if status:
-        status = status.filter(status=status)
-
     users = User.objects.all()
 
     return render(request, "task_list.html", {
