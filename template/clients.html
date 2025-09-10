@@ -31,6 +31,8 @@
         }
     </style>
    <h1>Clientlar</h1>
+    <a href="{% url 'client_create' %}" class="add-client"> Qo'shish</a>
+
 <form method="get" class="filter-bar" role="search" aria-label="Client filter">
   <div class="input-wrap">
     <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
@@ -99,7 +101,6 @@
   }
 </style>
 
-    <a href="{% url 'client_create' %}" class="add-client"> Qo'shish</a>
 
     <table class="client-list">
         <thead>
@@ -133,7 +134,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6">Hech qanday client mavjud emas.</td>
+                <td colspan="7" style="text-align: center;">Hech qanday client mavjud emas.</td>
             </tr>
             {% endfor %}
         </tbody>
