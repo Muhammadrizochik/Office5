@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from main.models.clients import Client
 from main.forms.clients_form import ClientForm
 from django.contrib.auth.models import User
-
+from django.db.models import Count
 
 
 
@@ -41,6 +41,7 @@ def client_create(request):
     else:
         form = ClientForm()
     return render(request, "create.html", {"form": form,  "title": "Client qo‘shish"})
+
 
 
 def client_update(request, client_id):
